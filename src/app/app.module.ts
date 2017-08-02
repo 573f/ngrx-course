@@ -1,3 +1,4 @@
+import { ThreadsService } from './services/threads.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -20,7 +21,7 @@ import { MessageListComponent } from './message-list/message-list.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [ThreadsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
