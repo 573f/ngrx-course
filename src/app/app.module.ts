@@ -1,15 +1,21 @@
-import { ThreadsService } from './services/threads.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule }             from '@angular/platform-browser';
+import { NgModule }                  from '@angular/core';
+import { HttpModule }                from '@angular/http';
 
-import { AppComponent } from './app.component';
-import { UserSelectionComponent } from './user-selection/user-selection.component';
-import { ThreadSectionComponent } from './thread-section/thread-section.component';
-import { MessageSectionComponent } from './message-section/message-section.component';
-import { ThreadListComponent } from './thread-list/thread-list.component';
-import { MessageListComponent } from './message-list/message-list.component';
+import { StoreModule}                from '@ngrx/store';
 
-@NgModule({
+import { AppComponent }              from './app.component';
+import { UserSelectionComponent }    from './user-selection/user-selection.component';
+import { ThreadSectionComponent }    from './thread-section/thread-section.component';
+import { MessageSectionComponent }   from './message-section/message-section.component';
+import { ThreadListComponent }       from './thread-list/thread-list.component';
+import { MessageListComponent }      from './message-list/message-list.component';
+import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { ThreadsService }            from './services/threads.service';
+import { storeDataReducer }          from './store/reducers/uiStoreDataReducer';
+import { uiStateReducer }            from './store/reducers/uiStateReducer';
+
+@NgModule( {
   declarations: [
     AppComponent,
     UserSelectionComponent,
@@ -19,9 +25,17 @@ import { MessageListComponent } from './message-list/message-list.component';
     MessageListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule,
+    StoreModule.forRoot(
+      {
+        storeData: storeDataReducer,
+        uiState: uiStateReducer
+      },
+      { initialState: INITIAL_APPLICATION_STATE }
+    )
   ],
-  providers: [ThreadsService],
-  bootstrap: [AppComponent]
-})
+  providers: [ ThreadsService ],
+  bootstrap: [ AppComponent ]
+} )
 export class AppModule { }
