@@ -1,19 +1,22 @@
-import { BrowserModule }             from '@angular/platform-browser';
-import { NgModule }                  from '@angular/core';
-import { HttpModule }                from '@angular/http';
+import { NgModule }            from '@angular/core';
+import { HttpModule }          from '@angular/http';
+import { BrowserModule }       from '@angular/platform-browser';
+import { EffectsModule }       from '@ngrx/effects';
+import { StoreModule }         from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { StoreModule}                from '@ngrx/store';
-
+import { environment }               from './../environments/environment';
 import { AppComponent }              from './app.component';
-import { UserSelectionComponent }    from './user-selection/user-selection.component';
-import { ThreadSectionComponent }    from './thread-section/thread-section.component';
-import { MessageSectionComponent }   from './message-section/message-section.component';
-import { ThreadListComponent }       from './thread-list/thread-list.component';
 import { MessageListComponent }      from './message-list/message-list.component';
-import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { MessageSectionComponent }   from './message-section/message-section.component';
 import { ThreadsService }            from './services/threads.service';
-import { storeDataReducer }          from './store/reducers/uiStoreDataReducer';
+import { INITIAL_APPLICATION_STATE } from './store/application-state';
+import { LoadThreadsEffectService }  from './store/effects/load-threads-effect.service';
 import { uiStateReducer }            from './store/reducers/uiStateReducer';
+import { storeDataReducer }          from './store/reducers/uiStoreDataReducer';
+import { ThreadListComponent }       from './thread-list/thread-list.component';
+import { ThreadSectionComponent }    from './thread-section/thread-section.component';
+import { UserSelectionComponent }    from './user-selection/user-selection.component';
 
 @NgModule( {
   declarations: [
@@ -33,9 +36,16 @@ import { uiStateReducer }            from './store/reducers/uiStateReducer';
         uiState: uiStateReducer
       },
       { initialState: INITIAL_APPLICATION_STATE }
-    )
+    ),
+    EffectsModule.forRoot( [
+      LoadThreadsEffectService
+    ] ),
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
   ],
-  providers: [ ThreadsService ],
+  providers: [
+    LoadThreadsEffectService,
+    ThreadsService
+  ],
   bootstrap: [ AppComponent ]
 } )
 export class AppModule { }

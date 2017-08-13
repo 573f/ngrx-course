@@ -10,7 +10,7 @@ export const NEW_MESSAGES_RECEIVED_ACTION = 'NEW_MESSAGES_RECEIVED_ACTION';
 
 export class LoadUserThreadsAction implements Action {
     readonly type = LOAD_USER_THREADS_ACTION;
-    constructor ( public payload: number ) {}
+    constructor ( public payload?: number ) {}
 }
 
 export class UserThreadsLoadedAction implements Action {
