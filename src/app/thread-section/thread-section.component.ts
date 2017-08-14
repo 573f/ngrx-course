@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Thread }                          from './../../../shared/model/thread';
 import { ThreadsService }                  from './../services/threads.service';
-import { LoadUserThreadsAction }           from './../store/actions';
+import { LoadUserThreadsAction, ThreadSelectedAction }           from './../store/actions';
 import { ApplicationState }                from './../store/application-state';
 import { mapStateToUnreadMessagesCounter } from './mapStateToUnreadMessagesCounter';
 import { userNameSelector }                from './userNameSelector';
@@ -32,5 +32,9 @@ export class ThreadSectionComponent implements OnInit {
 
   ngOnInit () {
     this.store.dispatch( new LoadUserThreadsAction() );
+  }
+
+  onThreadSelected ( selectedThreadId: number ) {
+    this.store.dispatch( new ThreadSelectedAction( selectedThreadId ) );
   }
 }

@@ -35,7 +35,9 @@ import { UserSelectionComponent }    from './user-selection/user-selection.compo
         storeData: storeDataReducer,
         uiState: uiStateReducer
       },
-      { initialState: INITIAL_APPLICATION_STATE }
+      {
+        initialState: INITIAL_APPLICATION_STATE
+      }
     ),
     EffectsModule.forRoot( [
       LoadThreadsEffectService
