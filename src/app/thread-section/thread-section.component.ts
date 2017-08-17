@@ -1,24 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Store }             from '@ngrx/store';
+import { Component }                                   from '@angular/core';
+import { Store }                                       from '@ngrx/store';
 
-import * as _         from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import * as _                                          from 'lodash';
+import { Observable }                                  from 'rxjs/Observable';
 
-import { Thread }                          from './../../../shared/model/thread';
-import { ThreadsService }                  from './../services/threads.service';
-import { LoadUserThreadsAction, ThreadSelectedAction }           from './../store/actions';
-import { ApplicationState }                from './../store/application-state';
-import { mapStateToUnreadMessagesCounter } from './mapStateToUnreadMessagesCounter';
-import { userNameSelector }                from './userNameSelector';
-import { stateToThreadSummariesSelector }  from './stateToThreadSummariesSelector';
-import { ThreadSummaryVM }                 from './thread-summary.vm';
+import { Thread }                                      from './../../../shared/model/thread';
+import { ThreadsService }                              from './../services/threads.service';
+import { LoadUserThreadsAction, ThreadSelectedAction } from './../store/actions';
+import { ApplicationState }                            from './../store/application-state';
+import { mapStateToUnreadMessagesCounter }             from './mapStateToUnreadMessagesCounter';
+import { stateToThreadSummariesSelector }              from './stateToThreadSummariesSelector';
+import { ThreadSummaryVM }                             from './thread-summary.vm';
+import { userNameSelector }                            from './userNameSelector';
 
 @Component( {
   selector: 'thread-section',
   templateUrl: './thread-section.component.html',
   styleUrls: [ './thread-section.component.css' ]
 } )
-export class ThreadSectionComponent implements OnInit {
+export class ThreadSectionComponent {
 
   userName$: Observable<string>;
   unreadMessagesCounter$: Observable<number>;
@@ -30,10 +30,6 @@ export class ThreadSectionComponent implements OnInit {
     this.unreadMessagesCounter$ = store.map( mapStateToUnreadMessagesCounter );
     this.threadSummaries$ = store.select( stateToThreadSummariesSelector );
     this.currentSelectedThreadId$ = store.select( state => state.uiState.currentThreadId );
-  }
-
-  ngOnInit () {
-    this.store.dispatch( new LoadUserThreadsAction() );
   }
 
   onThreadSelected ( selectedThreadId: number ) {

@@ -1,3 +1,6 @@
+import { SelectUserAction } from '../store/actions';
+import { ApplicationState } from './../store/application-state';
+import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSelectionComponent implements OnInit {
 
-  constructor() { }
+  constructor (
+    private store: Store<ApplicationState>
+  ) { }
 
   ngOnInit() {
   }
 
+  onSelectUser ( newUserId: number ) {
+    console.log( 'newUserId: ', newUserId );
+    this.store.dispatch( new SelectUserAction( newUserId ) );
+  }
 }

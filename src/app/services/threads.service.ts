@@ -1,6 +1,6 @@
 import { AllUserData } from './../../../shared/to/all-user-data';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -11,8 +11,11 @@ export class ThreadsService {
     private http: Http
   ) { }
 
-  loadUserThreads(): Observable<AllUserData> {
-    return this.http.get( '/api/threads' )
+  loadUserThreads ( userId: number ): Observable<AllUserData> {
+    const headers = new Headers();
+    headers.append( 'USERID', userId.toString(10) );
+
+    return this.http.get( '/api/threads' , {headers})
       .map(res => res.json());
   }
 }
