@@ -19,7 +19,8 @@ function mapThreadToThreadSummary( state: ApplicationState, thread: Thread ): Th
         id: thread.id,
         participantNames: names.join( ',' ),
         lastMessageText: state.storeData.messages[ lastMessageId ].text,
-        timestamp: lastMessage.timestamp
+        timestamp: lastMessage.timestamp,
+        read: thread.id === state.uiState.currentThreadId || thread.participants[state.uiState.userId] === 0
     };
 }
 

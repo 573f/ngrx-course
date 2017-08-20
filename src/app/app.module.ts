@@ -5,18 +5,22 @@ import { EffectsModule }       from '@ngrx/effects';
 import { StoreModule }         from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { environment }               from './../environments/environment';
-import { AppComponent }              from './app.component';
-import { MessageListComponent }      from './message-list/message-list.component';
-import { MessageSectionComponent }   from './message-section/message-section.component';
-import { ThreadsService }            from './services/threads.service';
-import { INITIAL_APPLICATION_STATE } from './store/application-state';
-import { LoadThreadsEffectService }  from './store/effects/load-threads-effect.service';
-import { uiStateReducer }            from './store/reducers/uiStateReducer';
-import { storeDataReducer }          from './store/reducers/uiStoreDataReducer';
-import { ThreadListComponent }       from './thread-list/thread-list.component';
-import { ThreadSectionComponent }    from './thread-section/thread-section.component';
-import { UserSelectionComponent }    from './user-selection/user-selection.component';
+import { environment }                      from './../environments/environment';
+import { AppComponent }                     from './app.component';
+import { MessageListComponent }             from './message-list/message-list.component';
+import { MessageSectionComponent }          from './message-section/message-section.component';
+import { ThreadsService }                   from './services/threads.service';
+import { INITIAL_APPLICATION_STATE }        from './store/application-state';
+import { LoadThreadsEffectService }         from './store/effects/load-threads-effect.service';
+import { MarkMessagesAsReadEffectService }  from './store/effects/mark-message-as-read.service';
+import { ServerNotificationsEffectService } from './store/effects/server-notifications-effect.service';
+import { WriteNewMessageEffectService }     from './store/effects/write-new-message-effect.service';
+import { uiStateReducer }                   from './store/reducers/uiStateReducer';
+import { storeDataReducer }                 from './store/reducers/uiStoreDataReducer';
+import { ThreadListComponent }              from './thread-list/thread-list.component';
+import { ThreadSectionComponent }           from './thread-section/thread-section.component';
+import { UserSelectionComponent }           from './user-selection/user-selection.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule( {
   declarations: [
@@ -25,7 +29,8 @@ import { UserSelectionComponent }    from './user-selection/user-selection.compo
     ThreadSectionComponent,
     MessageSectionComponent,
     ThreadListComponent,
-    MessageListComponent
+    MessageListComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,10 @@ import { UserSelectionComponent }    from './user-selection/user-selection.compo
       }
     ),
     EffectsModule.forRoot( [
-      LoadThreadsEffectService
+      LoadThreadsEffectService,
+      WriteNewMessageEffectService,
+        ServerNotificationsEffectService,
+      MarkMessagesAsReadEffectService
     ] ),
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
   ],
